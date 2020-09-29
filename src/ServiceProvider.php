@@ -19,10 +19,6 @@ class ServiceProvider extends LaravelServiceProvider
         }
 
         DB::listen(function (QueryExecuted $query) {
-            if ($query->time < $this->app['config']->get('logging.query.slower_than', 0)) {
-                return;
-            }
-
             $sqlWithPlaceholders = str_replace(['%', '?'], ['%%', '%s'], $query->sql);
 
             $bindings = $query->connection->prepareBindings($query->bindings);
@@ -34,6 +30,10 @@ class ServiceProvider extends LaravelServiceProvider
                 $realSql = vsprintf($sqlWithPlaceholders, array_map([$pdo, 'quote'], $bindings));
             }
             Log::debug(sprintf('[%s] [%s] %s | %s: %s', $query->connection->getDatabaseName(), $duration, $realSql, request()->method(), request()->getRequestUri()));
+
+            if ($query->time > $this->app['config']->get('logging.query.slower_than', 0)) {
+                Log::debug(sprintf('SLOWLOG: [%s] [%s] %s | %s: %s', $query->connection->getDatabaseName(), $duration, $realSql, request()->method(), request()->getRequestUri()));
+            }
         });
     }
 
