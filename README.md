@@ -1,14 +1,14 @@
-<h1 align="center"> Laravel Query Logger </h1>
+<h1 align="center"> Query Logger </h1>
 
 <p align="center"> :pencil: A dev tool to log all queries for Laravel application.</p>
 
 ## Installing
 
 ```shell
-$ composer require overtrue/laravel-query-logger --dev -vvv
+$ composer require webikevn/query-logger --dev
 ```
 
-Laravel Query Logger will be enabled when `LOG_QUERY` is `true`.
+Query Logger will be enabled when `LOG_QUERY` is `true`.
 
 > Please keep the `--dev` option.
 
@@ -42,14 +42,3 @@ return [
     ],
 ];
 ```
-
-
-## PHP 扩展包开发
-
-> 想知道如何从零开始构建 PHP 扩展包？
->
-> 请关注我的实战课程，我会在此课程中分享一些扩展开发经验 —— [《PHP 扩展包实战教程 - 从入门到发布》](https://learnku.com/courses/creating-package)
-
-## License
-
-MIT
